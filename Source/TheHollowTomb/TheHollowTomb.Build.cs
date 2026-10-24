@@ -18,7 +18,8 @@ public class TheHollowTomb : ModuleRules
 			"StateTreeModule",
 			"GameplayStateTreeModule",
 			"UMG",
-			"Slate"
+			"Slate",
+			"EnhancedInput"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
