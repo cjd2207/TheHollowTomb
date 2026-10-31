@@ -14,8 +14,22 @@
 APlayerCharacter::APlayerCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	bUseControllerRotationYaw = false;
-	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	// Create and set up Spring Arm
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
+	CameraBoom->SetupAttachment(RootComponent);
+	
+	CameraBoom->TargetArmLength = 300.0f; // Distance behind character
+	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on controller
+
+	// Create and attach Camera
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
+	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+	
+	// Character movement settings
+	bUseControllerRotationYaw = true;
+	//GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
 void APlayerCharacter::BeginPlay()
@@ -71,5 +85,5 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 {
     const FVector2D LookAxisVector = Value.Get<FVector2D>();
     AddControllerYawInput(LookAxisVector.X);
-    AddControllerPitchInput(LookAxisVector.Y);
+    AddControllerPitchInput(-LookAxisVector.Y);
 }

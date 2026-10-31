@@ -9,6 +9,8 @@
 
 class UInputAction;
 class UInputMappingContext;
+class UCameraComponent;
+class USpringArmComponent;
 
 /**
  * 
@@ -29,7 +31,6 @@ protected:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 
-protected:
 	/*** Mapping context and action */
 	UPROPERTY(EditDefaultsOnly, Category = "Input");
 	TObjectPtr<UInputMappingContext> DefaultMappingContect;
@@ -39,4 +40,12 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input");
 	TObjectPtr<UInputAction> LookAction;
+
+	/** Spring arm that positions the camera behind the character */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+	TObjectPtr<USpringArmComponent> CameraBoom;
+
+	/** Follow camera */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+	TObjectPtr<UCameraComponent> FollowCamera;
 };
