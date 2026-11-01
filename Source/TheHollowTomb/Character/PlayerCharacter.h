@@ -30,6 +30,11 @@ protected:
 	/** Movement input handlers */
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void StartJump();
+	void StopJump();
+	void StartSprint();
+	void StopSprint();
+	void ToggleCrouch();
 
 	/*** Mapping context and action */
 	UPROPERTY(EditDefaultsOnly, Category = "Input");
@@ -41,6 +46,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input");
 	TObjectPtr<UInputAction> LookAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> JumpAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> SprintAction;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> CrouchAction;
+
 	/** Spring arm that positions the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	TObjectPtr<USpringArmComponent> CameraBoom;
@@ -48,4 +62,8 @@ protected:
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	TObjectPtr<UCameraComponent> FollowCamera;
+
+private:
+	float WalkSpeed;
+	float SprintSpeed;
 };
