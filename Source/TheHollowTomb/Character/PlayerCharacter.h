@@ -22,6 +22,7 @@ class THEHOLLOWTOMB_API APlayerCharacter : public ABaseCharacter
 
 public:
 	APlayerCharacter();
+	virtual void Tick(float DeltaTime) override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -35,6 +36,7 @@ protected:
 	void StartSprint();
 	void StopSprint();
 	void ToggleCrouch();
+	void EnableStaminaRecovery();
 
 	/*** Mapping context and action */
 	UPROPERTY(EditDefaultsOnly, Category = "Input");
@@ -66,4 +68,24 @@ protected:
 private:
 	float WalkSpeed;
 	float SprintSpeed;
+	bool bIsSprinting;
+	bool bCanRecoverStamina = true;
+
+	FTimerHandle StaminaRecoveryTimerHandle;
+	
+	UPROPERTY(EditAnywhere, Category = "Stamina")
+	float MaxStamina = 100.f;
+
+	UPROPERTY(EditAnywhere, Category = "Stamina")
+	float CurrentStamina = 100.f;
+
+	UPROPERTY(EditAnywhere, Category = "Stamina")
+	float StaminaDrainRate = 25.f; // per second
+
+	UPROPERTY(EditAnywhere, Category = "Stamina")
+	float StaminaRecoveryRate = 15.f; // per second
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float StaminaRecoveryDelay = 10.0f;
+
 };
